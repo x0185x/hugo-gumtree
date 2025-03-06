@@ -1,0 +1,64 @@
+{{ define "main" }}
+<!-- Hero Search Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        {{ partial "search.html" . }}
+    </div>
+</div>
+
+<!-- Categories Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="mb-4">Browse Categories</h2>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-4">
+            {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+            <div class="col">
+                <a href="{{ "/categories/" | relLangURL }}{{ $name | urlize }}" class="text-decoration-none">
+                    <div class="card h-100 text-center">
+                        <div class="card-body">
+                            <i class="fa-solid fa-folder fa-3x mb-3 text-muted"></i>
+                            <h5 class="card-title">{{ $name }}</h5>
+                            <p class="card-text small text-muted">{{ len $taxonomy }} listings</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<!-- Featured Listings -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Featured Listings</h2>
+            <a href="/listings/" class="btn btn-sm btn-outline-secondary">View All</a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            {{ range first 4 (where (where .Site.RegularPages "Section" "listings") "Params.featured" true) }}
+            <div class="col">
+                {{ partial "listing-card.html" . }}
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+
+<!-- Recent Listings -->
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Recent Listings</h2>
+            <a href="/listings/" class="btn btn-sm btn-outline-secondary">View All</a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {{ range first 6 (where .Site.RegularPages "Section" "listings") }}
+            <div class="col">
+                {{ partial "listing-card.html" . }}
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</div>
+{{ end }}
