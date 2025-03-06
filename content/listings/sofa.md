@@ -7,8 +7,8 @@ location: "London, UK"
 category: "Furniture"
 featured: true
 images:
-  - "https://example.com/images/sofa1.jpg"
-  - "https://example.com/images/sofa2.jpg"
+  - "https://imagedelivery.net/ePR8PyKf84wPHx7_RYmEag/14e5dfe9-a2c9-4a46-bfed-4f8d62be0500/86"
+  - "https://imagedelivery.net/ePR8PyKf84wPHx7_RYmEag/14e5dfe9-a2c9-4a46-bfed-4f8d62be0500/86"
 seller_name: "John Doe"
 seller_phone: "+44 1234 567890"
 seller_email: "john.doe@example.com"
