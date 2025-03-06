@@ -1,6 +1,6 @@
-baseURL = "https://x0185x.github.io/hugo-gumtree/"
-languageCode = "en-us"
-title = "Gumtree Classifieds"
+baseURL = "/"
+languageCode = "en-UK"
+title = "gumtree"
 
 # Main menu configuration
 [menu]
