@@ -1,0 +1,12 @@
+name = "Gumtree"
+license = "MIT"
+licenselink = "https://github.com/x0185x/hugo-gumtree/blob/master/LICENSE"
+description = "A Gumtree-inspired Hugo theme using only CDN CSS"
+homepage = "https://github.com/x0185x/hugo-gumtree"
+tags = ["classifieds", "marketplace", "responsive", "minimal"]
+features = ["responsive", "clean", "marketplace"]
+min_version = "0.41.0"
+
+[author]
+  name = "x0185x"
+  homepage = "https://x0185x.com"
