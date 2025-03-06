@@ -1,28 +1,65 @@
-baseURL = '/'
-languageCode = 'en-US'
-title = 'gumtree'
+baseURL = "https://x0185x.github.io/hugo-gumtree/"
+languageCode = "en-us"
+title = "Gumtree Classifieds"
 
+# Main menu configuration
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Listings"
+    url = "/listings/"
+    weight = 2
+  [[menu.main]]
+    name = "Categories"
+    url = "/categories/"
+    weight = 3
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 4
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 5
+
+# Footer menu configuration
+  [[menu.footer]]
+    name = "Privacy Policy"
+    url = "/privacy/"
+    weight = 1
+  [[menu.footer]]
+    name = "Terms of Service"
+    url = "/terms/"
+    weight = 2
+  [[menu.footer]]
+    name = "FAQ"
+    url = "/faq/"
+    weight = 3
+  [[menu.footer]]
+    name = "About Us"
+    url = "/about/"
+    weight = 4
+
+# Site parameters
 [params]
-  description = "Latest breaking news and updates from around the world."
-  twitterCard = "summary_large_image"
-  schemaType = "NewsMediaOrganization"
-  schemaName = "Late News"
-  schemaUrl = "/"
+  description = "Buy and sell items locally with our Gumtree-inspired marketplace"
+  postAdLink = "/post-ad/"
+  searchPage = "/search/"
+  currency = "$"
+  
+  # Social media links
+  facebook = "https://facebook.com/yourusername"
+  twitter = "https://twitter.com/yourusername"
+  instagram = "https://instagram.com/yourusername"
 
+# Enable taxonomies for categories
 [taxonomies]
   category = "categories"
   tag = "tags"
-  author = "authors"
 
-[outputs]
-  home = ["HTML", "RSS", "JSON"]
-
-[[menus.main]]
-name = "Home"
-url = "/"
-weight = 10
-
-[[menus.main]]
-name = "Categories"
-url = "/categories"
-weight = 20
+# Pagination settings
+[paginate]
+  listingPaginate = 12
