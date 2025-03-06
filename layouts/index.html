@@ -17,7 +17,7 @@
                     <div class="card h-100 text-center">
                         <div class="card-body">
                             <i class="fa-solid fa-folder fa-3x mb-3 text-muted"></i>
-                            <h5 class="card-title">{{ $name }}</h5>
+                            <h5 class="card-title">{{ $name | humanize }}</h5>
                             <p class="card-text small text-muted">{{ len $taxonomy }} listings</p>
                         </div>
                     </div>
