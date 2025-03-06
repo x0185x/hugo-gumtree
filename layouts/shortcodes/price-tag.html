@@ -1,0 +1,7 @@
+{{ $price := .Get "price" }}
+{{ $showCurrency := .Get "currency" | default true }}
+{{ $currency := .Site.Params.currency | default "$" }}
+
+<div class="price-tag">
+    {{ if eq $showCurrency "true" }}{{ $currency }}{{ end }}{{ $price }}
+</div>
