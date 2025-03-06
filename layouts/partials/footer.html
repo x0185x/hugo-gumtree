@@ -1,0 +1,31 @@
+<footer class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h5>About {{ .Site.Title }}</h5>
+                <p>{{ .Site.Params.description | default "A marketplace for buying and selling items locally." }}</p>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    {{ range .Site.Menus.footer }}
+                    <li><a href="{{ .URL }}" class="text-decoration-none">{{ .Name }}</a></li>
+                    {{ end }}
+                </ul>
+            </div>
+            <div class="col-md-4 mb-3">
+                <h5>Connect With Us</h5>
+                <div class="d-flex gap-3 fs-5">
+                    {{ with .Site.Params.facebook }}<a href="{{ . }}" class="text-decoration-none"><i class="fab fa-facebook"></i></a>{{ end }}
+                    {{ with .Site.Params.twitter }}<a href="{{ . }}" class="text-decoration-none"><i class="fab fa-twitter"></i></a>{{ end }}
+                    {{ with .Site.Params.instagram }}<a href="{{ . }}" class="text-decoration-none"><i class="fab fa-instagram"></i></a>{{ end }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center mt-3">
+                <p class="small text-muted">© {{ now.Format "2006" }} {{ .Site.Title }}. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
