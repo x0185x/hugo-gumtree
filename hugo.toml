@@ -46,7 +46,7 @@ title = "gumtree"
 # Site parameters
 [params]
   description = "Buy and sell items locally with our Gumtree-inspired marketplace"
-  postAdLink = "#"
+  postAdLink = "/post-ad/"
   searchPage = "#"
   currency = "£"
   
