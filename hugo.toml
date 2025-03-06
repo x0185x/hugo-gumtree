@@ -1,7 +1,6 @@
 baseURL = '/'
 languageCode = 'en-US'
-title = 'Late News'
-theme = 'hugo-news'
+title = 'gumtree'
 
 [params]
   description = "Latest breaking news and updates from around the world."
