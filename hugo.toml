@@ -1,4 +1,4 @@
-baseURL = "https://x0185x.github.io/hugo-gumtree/"
+baseURL = "https://x0185x.github.io/hugo-gumtree"
 languageCode = "en-us"
 title = "Gumtree Classifieds"
 
@@ -46,9 +46,9 @@ title = "Gumtree Classifieds"
 # Site parameters
 [params]
   description = "Buy and sell items locally with our Gumtree-inspired marketplace"
-  postAdLink = "/post-ad/"
-  searchPage = "/search/"
-  currency = "$"
+  postAdLink = "#"
+  searchPage = "#"
+  currency = "£"
   
   # Social media links
   facebook = "https://facebook.com/yourusername"
