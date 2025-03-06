@@ -60,6 +60,4 @@ jobs:
           gh release create "v1.0.0-${{ github.run_number }}" \
             --title "Late News Site Update ${{ github.run_number }}" \
             --notes-file release_notes.txt \
-
-           
-site.zip
+            site.zip
