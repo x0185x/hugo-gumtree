@@ -105,13 +105,13 @@
     </div>
 </div>
 
-{{ with .Params.category }}
+{{ with .Params.categories }}
 <div class="mt-5">
     <h3>Similar Listings</h3>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-        {{ $category := . }}
+        {{ $categories := . }}
         {{ $currentPage := $.Page }}
-        {{ range first 4 (where (where $.Site.RegularPages "Section" "listings") "Params.category" $category) }}
+        {{ range first 4 (where (where $.Site.RegularPages "Section" "listings") "Params.categories" $categories) }}
         {{ if ne . $currentPage }}
         <div class="col">
             {{ partial "listing-card.html" . }}
