@@ -4,7 +4,7 @@ date: {{ .Date }}
 draft: true
 price: "Contact for price"
 location: ""
-category: ""
+categories: [""]
 featured: false
 images: []
 seller_name: ""
