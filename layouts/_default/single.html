@@ -1,0 +1,122 @@
+{{ define "main" }}
+<div class="row">
+    <div class="col-md-8">
+        <h1 class="mb-3">{{ .Title }}</h1>
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <span class="price-tag fs-3">{{ if .Params.price }}{{ .Params.price }}{{ else }}Contact for price{{ end }}</span>
+                <span class="ms-3 location-tag"><i class="fa-solid fa-location-dot me-1"></i>{{ .Params.location | default "Location not specified" }}</span>
+            </div>
+            <div class="listing-date">Posted on {{ .Date.Format "January 2, 2006" }}</div>
+        </div>
+        
+        {{ if .Params.images }}
+        <div class="mb-4">
+            <div id="listingCarousel" class="carousel slide" data-bs-ride="false">
+                <div class="carousel-inner">
+                    {{ range $index, $image := .Params.images }}
+                    <div class="carousel-item{{ if eq $index 0 }} active{{ end }}">
+                        <img src="{{ $image }}" class="d-block w-100 rounded" alt="Listing image {{ add $index 1 }}">
+                    </div>
+                    {{ end }}
+                </div>
+                {{ if gt (len .Params.images) 1 }}
+                <button class="carousel-control-prev" type="button" data-bs-target="#listingCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#listingCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                {{ end }}
+            </div>
+        </div>
+        {{ end }}
+        
+        <div class="content mb-4">
+            <h4>Description</h4>
+            <div class="bg-white p-4 rounded shadow-sm">
+                {{ .Content }}
+            </div>
+        </div>
+        
+        {{ with .Params.features }}
+        <div class="mb-4">
+            <h4>Features</h4>
+            <div class="bg-white p-4 rounded shadow-sm">
+                <ul class="list-group list-group-flush">
+                    {{ range . }}
+                    <li class="list-group-item bg-transparent">{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-4 sticky-top" style="top: 20px;">
+            <div class="card-body">
+                <h4 class="card-title">Contact Seller</h4>
+                {{ with .Params.seller_name }}
+                <p class="card-text mb-3"><i class="fa-solid fa-user me-2"></i>{{ . }}</p>
+                {{ end }}
+                
+                <div class="d-grid gap-2">
+                    {{ with .Params.seller_phone }}
+                    <a href="tel:{{ . }}" class="btn btn-outline-success">
+                        <i class="fa-solid fa-phone me-2"></i>{{ . }}
+                    </a>
+                    {{ end }}
+                    
+                    {{ with .Params.seller_email }}
+                    <a href="mailto:{{ . }}" class="btn btn-primary">
+                        <i class="fa-solid fa-envelope me-2"></i>Email Seller
+                    </a>
+                    {{ end }}
+                </div>
+                
+                <div class="mt-4">
+                    <div class="alert alert-warning">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>Safety Tips
+                        <ul class="mb-0 mt-2 small">
+                            <li>Meet in a safe public place</li>
+                            <li>Don't pay in advance</li>
+                            <li>Check the item before buying</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-3 rounded shadow-sm">
+            <h5>Share this listing</h5>
+            <div class="d-flex gap-3 fs-3">
+                <a href="#" class="text-decoration-none"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-decoration-none"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-decoration-none"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" class="text-decoration-none"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ with .Params.category }}
+<div class="mt-5">
+    <h3>Similar Listings</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        {{ $category := . }}
+        {{ $currentPage := $.Page }}
+        {{ range first 4 (where (where $.Site.RegularPages "Section" "listings") "Params.category" $category) }}
+        {{ if ne . $currentPage }}
+        <div class="col">
+            {{ partial "listing-card.html" . }}
+        </div>
+        {{ end }}
+        {{ end }}
+    </div>
+</div>
+{{ end }}
+{{ end }}
