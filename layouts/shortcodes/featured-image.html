@@ -1,0 +1,10 @@
+{{ $img := .Get "src" }}
+{{ $alt := .Get "alt" | default "Featured image" }}
+{{ $caption := .Get "caption" }}
+
+<figure class="figure">
+    <img src="{{ $img }}" class="figure-img img-fluid rounded" alt="{{ $alt }}">
+    {{ with $caption }}
+    <figcaption class="figure-caption text-center">{{ . }}</figcaption>
+    {{ end }}
+</figure>
