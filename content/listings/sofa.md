@@ -4,7 +4,7 @@ date: 2025-03-06
 draft: false
 price: "250"
 location: "London, UK"
-category: "Furniture"
+categories: ["Furniture"]
 featured: true
 images:
   - "https://imagedelivery.net/ePR8PyKf84wPHx7_RYmEag/14e5dfe9-a2c9-4a46-bfed-4f8d62be0500/86"
