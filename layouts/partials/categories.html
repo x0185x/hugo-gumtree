@@ -1,0 +1,14 @@
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Categories</h5>
+        <ul class="list-unstyled">
+            {{ range .Site.Taxonomies.categories }}
+            <li>
+                <a href="{{ .Page.RelPermalink }}" class="text-decoration-none">
+                    {{ .Page.Title }} ({{ .Count }})
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
+</div>
