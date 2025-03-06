@@ -59,7 +59,3 @@ title = "Gumtree Classifieds"
 [taxonomies]
   category = "categories"
   tag = "tags"
-
-# Pagination settings
-[paginate]
-  listingPaginate = 12
