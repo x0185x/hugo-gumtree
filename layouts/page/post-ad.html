@@ -1,0 +1,230 @@
+{{ define "main" }}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1 class="mb-4">{{ .Title }}</h1>
+        
+        {{ if .Content }}
+        <div class="content mb-4">
+            {{ .Content }}
+        </div>
+        {{ end }}
+        
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form id="postAdForm" action="{{ .Site.Params.formSubmitAction | default "#" }}" method="POST">
+                    <div class="mb-3">
+                        <label for="adTitle" class="form-label">Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="adTitle" name="adTitle" required>
+                        <div class="form-text">Keep it short and descriptive (max 70 characters)</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="adCategory" class="form-label">Category <span class="text-danger">*</span></label>
+                        <select class="form-select" id="adCategory" name="adCategory" required>
+                            <option value="" selected disabled>Select a category</option>
+                            {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
+                            <option value="{{ $name | urlize }}">{{ $name }}</option>
+                            {{ end }}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="adPrice" class="form-label">Price <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text">{{ .Site.Params.currency | default "$" }}</span>
+                            <input type="number" class="form-control" id="adPrice" name="adPrice" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" id="negotiablePrice" name="negotiablePrice">
+                            <label class="form-check-label" for="negotiablePrice">
+                                Price is negotiable
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="adDescription" class="form-label">Description <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="adDescription" name="adDescription" rows="5" required></textarea>
+                        <div class="form-text">Be detailed about condition, features, and reason for selling</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="adImages" class="form-label">Images (max 5)</label>
+                        <input class="form-control" type="file" id="adImages" name="adImages" multiple accept="image/*">
+                        <div class="form-text">Good quality photos increase your chances of selling</div>
+                        <div class="image-preview mt-3 row g-2" id="imagePreviewContainer"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Item Features</label>
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" id="featureInput" placeholder="Add a feature (e.g. Brand new, Warranty included)">
+                            <button class="btn btn-outline-secondary" type="button" id="addFeatureBtn">Add</button>
+                        </div>
+                        <ul class="list-group" id="featuresList">
+                            <!-- Features will be added here dynamically -->
+                        </ul>
+                        <input type="hidden" id="adFeatures" name="adFeatures">
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <h4>Contact Information</h4>
+                    
+                    <div class="mb-3">
+                        <label for="sellerName" class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="sellerName" name="sellerName" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="sellerEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="sellerEmail" name="sellerEmail" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="sellerPhone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                        <input type="tel" class="form-control" id="sellerPhone" name="sellerPhone" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="sellerLocation" class="form-label">Location <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="sellerLocation" name="sellerLocation" required>
+                        <div class="form-text">City, neighborhood, or postal code</div>
+                    </div>
+                    
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="termsAgree" name="termsAgree" required>
+                        <label class="form-check-label" for="termsAgree">
+                            I agree to the <a href="{{ .Site.BaseURL }}terms/" target="_blank">Terms of Service</a>
+                            and <a href="{{ .Site.BaseURL }}privacy/" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">Post Your Ad</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="mt-4 bg-light p-3 rounded">
+            <h5><i class="fa-solid fa-lightbulb me-2 text-warning"></i>Tips for a successful ad</h5>
+            <ul class="mb-0">
+                <li>Be honest about the condition of your item</li>
+                <li>Include clear photos from multiple angles</li>
+                <li>Respond to inquiries promptly</li>
+                <li>Set a fair and competitive price</li>
+                <li>Include brand, model, and specifications when applicable</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Simple JavaScript for the form -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Image preview functionality
+        const imageInput = document.getElementById('adImages');
+        const previewContainer = document.getElementById('imagePreviewContainer');
+        
+        imageInput.addEventListener('change', function() {
+            previewContainer.innerHTML = '';
+            const files = this.files;
+            
+            // Limit to 5 images
+            const maxFiles = Math.min(files.length, 5);
+            
+            for (let i = 0; i < maxFiles; i++) {
+                const file = files[i];
+                
+                if (!file.type.startsWith('image/')) continue;
+                
+                const col = document.createElement('div');
+                col.className = 'col-4 col-md-3 col-lg-2';
+                
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'position-relative';
+                
+                const img = document.createElement('img');
+                img.className = 'img-thumbnail';
+                img.file = file;
+                
+                const reader = new FileReader();
+                reader.onload = (function(aImg) { 
+                    return function(e) { 
+                        aImg.src = e.target.result; 
+                    }; 
+                })(img);
+                
+                reader.readAsDataURL(file);
+                imgContainer.appendChild(img);
+                col.appendChild(imgContainer);
+                previewContainer.appendChild(col);
+            }
+        });
+        
+        // Features list functionality
+        const featureInput = document.getElementById('featureInput');
+        const addFeatureBtn = document.getElementById('addFeatureBtn');
+        const featuresList = document.getElementById('featuresList');
+        const adFeaturesInput = document.getElementById('adFeatures');
+        const features = [];
+        
+        function updateFeatures() {
+            adFeaturesInput.value = JSON.stringify(features);
+        }
+        
+        function addFeature() {
+            const featureText = featureInput.value.trim();
+            if (featureText) {
+                features.push(featureText);
+                updateFeatures();
+                
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.innerHTML = `
+                    <span>${featureText}</span>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-feature" data-feature="${featureText}">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                `;
+                featuresList.appendChild(li);
+                featureInput.value = '';
+            }
+        }
+        
+        addFeatureBtn.addEventListener('click', addFeature);
+        
+        featureInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addFeature();
+            }
+        });
+        
+        featuresList.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-feature')) {
+                const btn = e.target.closest('.remove-feature');
+                const featureToRemove = btn.dataset.feature;
+                const index = features.indexOf(featureToRemove);
+                
+                if (index !== -1) {
+                    features.splice(index, 1);
+                    updateFeatures();
+                    btn.closest('li').remove();
+                }
+            }
+        });
+        
+        // Form submission
+        const form = document.getElementById('postAdForm');
+        form.addEventListener('submit', function(e) {
+            // In a real implementation, you would handle form submission here
+            // For demo purposes, prevent default and show alert
+            e.preventDefault();
+            alert('Your ad would be submitted here. This is a demo template.');
+            // You can redirect to a thank you page or implement actual form handling
+        });
+    });
+</script>
+{{ end }}
